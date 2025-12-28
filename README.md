@@ -37,3 +37,11 @@ We are making school web page design with proffestional backend design. It solve
 ---
 
 ## 📂 Project Structure
+project-name/
+│── frontend/
+│ ├── index.html
+│ ├── style.css
+│ └── script.js
+│── backend/
+│── assets/
+│── README.md
