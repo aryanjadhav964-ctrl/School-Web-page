@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - College Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="width: 80px; height: 80px; background: #ddd; border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem;">👤</div>
+                    <h3 id="user-name">User Name</h3>
+                    <p id="user-role" style="text-transform: capitalize; color: #666;">Role</p>
+                </div>
+                <nav>
+                    <ul id="sidebar-menu">
+                        <!-- Menu items injected by JS -->
+                    </ul>
+                </nav>
+                <button onclick="logout()" style="color: red; margin-top: 2rem;">Logout</button>
+            </aside>
+
+            <section class="dashboard-content" id="content-area">
+                <!-- Content injected by JS -->
+                <h2>Welcome to your Dashboard</h2>
+                <p>Select an option from the sidebar to manage your activities.</p>
+            </section>
+        </div>
+    </main>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = checkAuth();
+            if (!user) return;
+
+            document.getElementById('user-name').textContent = user.name;
+            document.getElementById('user-role').textContent = user.role;
+
+            renderSidebar(user.role);
+            renderContent('overview', user.role); // Default view
+        });
+
+        const dashboardData = {
+            student: [
+                { id: 'overview', label: 'Overview' },
+                { id: 'notices', label: 'Notices' },
+                { id: 'materials', label: 'Study Materials' },
+                { id: 'calendar', label: 'Academic Calendar' },
+                { id: 'results', label: 'Exam Results' }
+            ],
+            faculty: [
+                { id: 'overview', label: 'Overview' },
+                { id: 'upload-notice', label: 'Upload Notices' },
+                { id: 'upload-material', label: 'Upload Materials' },
+                { id: 'students', label: 'Student List' }
+            ],
+            admin: [
+                { id: 'overview', label: 'Overview' },
+                { id: 'manage-users', label: 'Manage Users' },
+                { id: 'manage-content', label: 'Manage Content' },
+                { id: 'approve-notices', label: 'Approve Notices' }
+            ]
+        };
+
+        function renderSidebar(role) {
+            const menu = document.getElementById('sidebar-menu');
+            const items = dashboardData[role] || [];
+            
+            menu.innerHTML = items.map(item => `
+                <li>
+                    <button onclick="renderContent('${item.id}', '${role}')" id="btn-${item.id}">
+                        ${item.label}
+                    </button>
+                </li>
+            `).join('');
+            
+            // Highlight first item
+            if(items.length > 0) document.getElementById(`btn-${items[0].id}`).classList.add('active');
+        }
+
+        function renderContent(viewId, role) {
+            const content = document.getElementById('content-area');
+            
+            // Update active state
+            document.querySelectorAll('.sidebar button').forEach(b => b.classList.remove('active'));
+            const activeBtn = document.getElementById(`btn-${viewId}`);
+            if(activeBtn) activeBtn.classList.add('active');
+
+            let html = '';
+
+            switch(viewId) {
+                case 'overview':
+                    html = `<h2>Overview</h2><p>Welcome back, ${role}!</p>
+                            <div class="grid">
+                                <div class="card"><h3>Notifications</h3><p>3 New Notices</p></div>
+                                <div class="card"><h3>Pending Tasks</h3><p>0 Pending</p></div>
+                            </div>`;
+                    break;
+                case 'notices':
+                    html = `<h2>Notices</h2>
+                            <div class="notice-item"><h3>Exam Schedule</h3><p>Mid-term exams start next week.</p></div>
+                            <div class="notice-item"><h3>Holiday</h3><p>Campus closed on Friday.</p></div>`;
+                    break;
+                case 'materials':
+                    html = `<h2>Study Materials</h2>
+                            <ul style="list-style: none;">
+                                <li style="padding: 1rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
+                                    <span>Data Structures Notes (PDF)</span> <button class="btn" style="padding: 0.2rem 0.5rem; font-size: 0.8rem;">Download</button>
+                                </li>
+                                <li style="padding: 1rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
+                                    <span>Physics Lab Manual (DOCX)</span> <button class="btn" style="padding: 0.2rem 0.5rem; font-size: 0.8rem;">Download</button>
+                                </li>
+                            </ul>`;
+                    break;
+                case 'upload-notice':
+                    html = `<h2>Upload Notice</h2>
+                            <form>
+                                <div class="form-group"><label>Title</label><input type="text"></div>
+                                <div class="form-group"><label>Content</label><textarea rows="3"></textarea></div>
+                                <button class="btn">Submit for Approval</button>
+                            </form>`;
+                    break;
+                 case 'manage-users':
+                    html = `<h2>Manage Users</h2>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr style="background: #eee; text-align: left;"><th style="padding: 0.5rem;">Name</th><th>Role</th><th>Action</th></tr>
+                                <tr><td style="padding: 0.5rem;">Student A</td><td>Student</td><td><button>Edit</button></td></tr>
+                                <tr><td style="padding: 0.5rem;">Faculty B</td><td>Faculty</td><td><button>Edit</button></td></tr>
+                            </table>`;
+                    break;
+                default:
+                    html = `<h2>${viewId.replace('-', ' ')}</h2><p>This module is under development.</p>`;
+            }
+            
+            content.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

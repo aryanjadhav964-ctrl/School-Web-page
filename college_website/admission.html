@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admissions - College Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Admissions 2026</h1>
+        <p>Join our vibrant community of learners. Fill out the form below to start your application process.</p>
+        
+        <div class="form-container">
+            <h2>Inquiry Form</h2>
+            <form>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="course">Interested Course</label>
+                    <select id="course">
+                        <option>Computer Science</option>
+                        <option>Mechanical Engineering</option>
+                        <option>Business Administration</option>
+                        <option>Psychology</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message/Query</label>
+                    <textarea id="message" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn">Submit Inquiry</button>
+            </form>
+        </div>
+
+        <div style="margin-top: 3rem;">
+            <h2>Admission Process</h2>
+            <ol style="margin-left: 1.5rem; margin-top: 1rem;">
+                <li>Fill out the online application form.</li>
+                <li>Submit required documents (Transcripts, ID proof).</li>
+                <li>Appear for the entrance test (if applicable).</li>
+                <li>Attend the counseling session.</li>
+                <li>Pay the fees to confirm your seat.</li>
+            </ol>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
