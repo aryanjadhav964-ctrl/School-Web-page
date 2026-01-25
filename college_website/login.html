@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - College Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container" style="display: flex; justify-content: center; align-items: center; min-height: 60vh;">
+        <div class="form-container">
+            <h2 style="text-align: center;">Login to Portal</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="role">Select Role</label>
+                    <select id="role">
+                        <option value="student">Student</option>
+                        <option value="faculty">Faculty</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username / ID</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Login</button>
+            </form>
+            <p style="margin-top: 1rem; text-align: center;">
+                <a href="#">Forgot Password?</a>
+            </p>
+        </div>
+    </main>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const role = document.getElementById('role').value;
+            // Mock login - in a real app, we would validate credentials here
+            login(role);
+        });
+    </script>
+</body>
+</html>
